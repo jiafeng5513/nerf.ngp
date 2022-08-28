@@ -29,7 +29,47 @@ https://user-images.githubusercontent.com/25863658/175821784-63ba79f6-29be-47b5-
 
 * [dreamfields-torch](https://github.com/ashawkey/dreamfields-torch): PyTorch+CUDA implementation of [_Zero-Shot Text-Guided Object Generation with Dream Fields_](https://arxiv.org/abs/2112.01455) based on this repository.
 
+# install with wsl2 and ubuntu 20.04
+### 1. must on windows10 or windows 11
+### 2. open "PowerShell（管理员）"
+### 3. if you never install wsl/wsl2 and any linux subsystem, just type `wsl --install`. if you have a wsl installed, `wsl --install -d ubuntu`. You can install it follow this [使用 WSL 在 Windows 上安装 Linux](https://docs.microsoft.com/zh-cn/windows/wsl/install)
+### 4. `sudo apt-get update && sudo apt-get upgrade`
+### 5. install [Anaconda](https://www.anaconda.com/) or Miniconda, remember you are in wsl, this is a linux sub system.
+### 6. (optinal) source change. [apt source](https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/), [conda source](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/)
+### 7. (optinal) proxy 
+### 8. install cuda 11.3.1 <br>
+1. goto [CUDA Toolkit 11.3 Update 1 Downloads](https://developer.nvidia.com/cuda-11-3-1-download-archive)
+2. choose : Linux -> x86_64 -> WSL_Ubuntu -> 2.0 -> runfile (local)
+3. you will got installation instructions below, just follow it.
+4. DO NOT follow any other articals like "how to install cuda and nvidia divers in ubuntu", it not same as ubuntu inside wsl/wsl2. ALL YOU NEED is follow the installation instructions getting from Nvidia page.
+5. setup envs
+```bash
+export PATH=/usr/local/cuda-11.3/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-11.3/lib64:/usr/local/cuda-11.3/targets/x86_64-linux/lib/stubs/libcuda.so:$LD_LIBRARY_PATH
+```
+6. make a link<br>
+`sudo ln -s /usr/lib/wsl/lib/libcuda.so /usr/lib/libcuda.so`
+7. after install, type `nvidia-smi` and `nvcc -V`, if everything is ok, you will see cuda infos.
+### 9. setup nerf.ngp(this repo)
+1. clone this repo
+2. `cd nerf.ngp && conda env create -f environment.yml`
+3. `conda activate torch-ngp`
+4. `git clone https://github.com/NVlabs/tiny-cuda-nn`
+5. `cd tiny-cuda-nn && git submodule update --init --recursive`
+6. `cd tiny-cuda-nn/bindings/torch && python setup.py install`
+7. 
+### 10. install gedit as hook for xserver by `sudo apt install gedit`
+### 11. start gedit to check the gui ability of your wsl2
+### 12. enjoy your nerf
+
+```bash
+# 1. must on windows10 or windows 11
+# 2. open "PowerShell（管理员）"
+# 3. if you never install wsl/wsl2 and any linux subsystem, just type “wsl”,
+```
+
 # Install
+
 ```bash
 git clone --recursive https://github.com/ashawkey/torch-ngp.git
 cd torch-ngp
